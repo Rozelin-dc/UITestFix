@@ -44,10 +44,10 @@ public class Trace {
 
 
     @Pointcut("execution (* testcases.**..*.setUp(..)) || execution (* testcases.**..*.before(..) )")
-    public void setUpPointcut(JoinPoint joinPoint) {
+    public void setUpPointcut() {
     }
 
-    @Before("setUpPointcut(JoinPoint)")
+    @Before("setUpPointcut()")
     public void beforeSetUp(JoinPoint joinPoint) {
         // get className
         String signature = joinPoint.getSignature().toString();
@@ -75,10 +75,10 @@ public class Trace {
     }
 
     @Pointcut("call (* org.openqa.selenium.WebDriver.get(..))")
-    public void WebDriverGetPointcut(JoinPoint joinPoint) {
+    public void WebDriverGetPointcut() {
     }
 
-    @Before("WebDriverGetPointcut(JoinPoint)")
+    @Before("WebDriverGetPointcut()")
     public void beforeWebDriverGet(JoinPoint joinPoint) {
         if (oldStateMachine != null) {
             oldStateMachine.setDriver((WebDriver) joinPoint.getTarget());
@@ -91,10 +91,10 @@ public class Trace {
 
 
     @Pointcut("call (* org.openqa.selenium.WebElement.*(..))")
-    public void webElementPointcut(ProceedingJoinPoint proceedingJoinPoint) {
+    public void webElementPointcut() {
     }
 
-    @Around("webElementPointcut(ProceedingJoinPoint)")
+    @Around("webElementPointcut()")
     public Object aroundWebElement(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object object = null;
         if (aspectLock) {
@@ -118,10 +118,10 @@ public class Trace {
     }
 
     @Pointcut("call (* org.openqa.selenium.WebDriver.findElement(..))")
-    public void webDriverPointcut(ProceedingJoinPoint proceedingJoinPoint) {
+    public void webDriverPointcut() {
     }
 
-    @Around("webDriverPointcut(ProceedingJoinPoint)")
+    @Around("webDriverPointcut()")
     public Object aroundWebDriver(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         webDriver = (WebDriver) proceedingJoinPoint.getTarget();
         if (proceedingJoinPoint.getSignature().getName().equals("quit")) {
@@ -157,10 +157,10 @@ public class Trace {
     }
 
     @Pointcut("execution (* testcases.**..*.close(..)) || execution (* testcases.**..*.end(..)) || execution (* testcases.**..*.tearDown(..))")
-    public void closePointcut(JoinPoint joinPoint) {
+    public void closePointcut() {
     }
 
-    @Before("closePointcut(JoinPoint)")
+    @Before("closePointcut()")
     public void beforeClose(JoinPoint joinPoint) {
         // get className
         if (!version) {
