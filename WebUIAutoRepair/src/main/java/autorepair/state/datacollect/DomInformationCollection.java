@@ -76,7 +76,11 @@ public class DomInformationCollection {
         FileUtils.copyFile(srcfile, new File(rootPath + "fullScreen.png"));
         img = ImageIO.read(new File(rootPath + "fullScreen.png"));
         /*html*/
-        String html = UtilsSeleniumHelper.getHtml(driver);
+        String _html = UtilsSeleniumHelper.getHtml(driver);
+        byte[] bytes = _html.getBytes(StandardCharsets.ISO_8859_1);
+        WebElement metaCharset = driver.findElement(By.xpath("//meta[@charset]"));
+        String charset = metaCharset.getAttribute("charset");
+        String html = new String(bytes, charset);
         parseHtml(html);
         stringToFile(html, savePath, "temp.html");
         /*tree*/
@@ -364,7 +368,7 @@ public class DomInformationCollection {
                     String text = driver.findElement(By.xpath(preDomNodeInfo.getXpath())).getAttribute("value");
                     preDomNodeInfo.setText(text);
                 }catch (NoSuchElementException noSuchElementException){
-                    
+
                 }
             }
         }
