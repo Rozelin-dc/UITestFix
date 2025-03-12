@@ -54,16 +54,17 @@ public class Trace {
         signature = signature.substring(signature.indexOf(" ") + 1, signature.lastIndexOf("."));
         className = signature.substring(signature.lastIndexOf(".") + 1);
         aspectLock = true;
+
+        String oldPath = Settings.OUTPUT_PATH + "old" + File.separator + signature.replaceAll("[.]", "/") + File.separator;
+        String newPath = Settings.OUTPUT_PATH + "new" + File.separator + signature.replaceAll("[.]", "/") + File.separator;
         if (!version) {
             // version is old
-            savePath = Settings.OUTPUT_PATH + "old" + File.separator + signature.replaceAll("[.]", "/") + File.separator;
+            savePath = oldPath;
             System.out.println(savePath);
             oldStateMachine = new StateMachineImpl(className, savePath);
         } else {
-            savePath = Settings.OUTPUT_PATH + "new" + File.separator + signature.replaceAll("[.]", "/") + File.separator;
-            oldStateMachine = new StateMachineImpl(className,
-                    Settings.OUTPUT_PATH + "old" + File.separator + signature.replaceAll("[.]", "/") + File.separator
-            );
+            savePath = newPath;
+            oldStateMachine = new StateMachineImpl(className, oldPath);
             try {
                 oldStateMachine.load(oldStateMachine.getSavePath());
             } catch (IOException | ClassNotFoundException ioException) {
