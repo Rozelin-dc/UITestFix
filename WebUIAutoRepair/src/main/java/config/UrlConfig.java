@@ -17,4 +17,6 @@ public class UrlConfig {
     public static final String CLAROLINE_OLD = "http://10.16.10.235/claroline-1.11.5/";
     public static final String CLAROLINE_NEW = "http://10.16.10.235/claroline1107/";
 
+    public static final String TL_OLD = "http://localhost:2323";
+    public static final String TL_NEW = "http://localhost:1123";
 }
