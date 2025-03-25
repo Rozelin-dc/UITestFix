@@ -241,7 +241,11 @@ public class MatchFactory {
         if (preDomNodeInfo == null) {
             return "";
         }
-        WebElement webElement = Original.retrieveWebElementFromDOMInfo(newStateMachine.getDriver(), preDomNodeInfo);
+        WebElement webElement = Original.retrieveWebElementFromDOMInfo(
+                newStateMachine.getDriver(),
+                preDomNodeInfo,
+                oldEvent.getMethod()
+        );
         if (webElement != null) {
             return UtilsXpath.generateXPathForWebElement(webElement, "");
         } else {
