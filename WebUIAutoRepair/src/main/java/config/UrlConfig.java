@@ -19,4 +19,7 @@ public class UrlConfig {
 
     public static final String TL_OLD = "http://localhost:2323";
     public static final String TL_NEW = "http://localhost:1123";
+
+    public static final String SUPERSET_OLD = "http://localhost:8000";
+    public static final String SUPERSET_NEW = "http://localhost:8000";
 }

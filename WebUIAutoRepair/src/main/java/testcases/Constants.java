@@ -120,6 +120,14 @@ public class Constants {
         }
     }
 
+    public static String getSupersetUrl() throws IOException {
+        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+            return UrlConfig.SUPERSET_NEW;
+        } else {
+            return UrlConfig.SUPERSET_OLD;
+        }
+    }
+
 //    public static String getW3SchoolsUrl() throws IOException {
 //        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
 //        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
