@@ -1,6 +1,7 @@
 package testcases.tl.model_based_dataset.test;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import config.DriverConfig;
@@ -43,6 +44,13 @@ public class TestSetting {
     void testCaption() throws InterruptedException {
         WebElement caption = driver.findElement(By.className("caption"));
         assertTrue(caption.getText().contains("ローマ字"));
+    }
+
+    @Test(priority = 0)
+    void openSettingDialog() throws InterruptedException {
+        List<WebElement> iconButtons = driver.findElements(By.className("icon-button"));
+        WebElement settingButton = iconButtons.get(2);
+        settingButton.click();
     }
     
     @AfterMethod
