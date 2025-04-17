@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.testng.AssertJUnit.assertTrue;
 
-public class NativeFilters {
+public class NativeFiltersTest {
     WebDriver driver;
 
     @BeforeMethod
@@ -26,6 +26,8 @@ public class NativeFilters {
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         driver.get(Constants.getSupersetUrl());
+
+        // TODO: ログイン処理とか
     }
 
     @Test(priority = 0)

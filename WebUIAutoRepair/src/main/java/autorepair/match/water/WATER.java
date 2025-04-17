@@ -1,7 +1,7 @@
 package autorepair.match.water;
 
 import autorepair.state.datacollect.PreDomNodeInfo;
-import com.sun.security.ntlm.NTLMException;
+//import com.sun.security.ntlm.NTLMException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -97,7 +97,7 @@ public class WATER {
 
 
         for (PreDomNodeInfo preDomNodeInfo : newPreDomNodeInfoList) {
-            if (getSimilarityScore(oldPreDomNodeInfo, preDomNodeInfo).compareTo(0.5) > 0) {
+            if (getSimilarityScore(oldPreDomNodeInfo, preDomNodeInfo).compareTo(Double.valueOf(0.5)) > 0) {
                 System.out.println("get element by similarity:" + oldPreDomNodeInfo.getText());
 
                 return driver.findElement(By.xpath(preDomNodeInfo.getXpath()));
@@ -153,9 +153,9 @@ public class WATER {
             }
             rho2 = rho2 / 2;
             rho = (rho1 * alpha + rho2 * (1 - alpha));
-            return rho;
+            return (Double) rho;
         }
-        return 0.0;
+        return (Double) 0.0;
     }
 
     public  static  void getAllChildXpath(Element element,String nowPath,int parent){
@@ -172,9 +172,9 @@ public class WATER {
         for (Element child : elements){
             if (child.tag().toString().contains("<")) continue;
             if (map.containsKey(child.tagName())){
-                map.put(child.tagName(),map.get(child.tagName())+1);
+                map.put(child.tagName(), Integer.valueOf(map.get(child.tagName())+1));
             }else{
-                map.put(child.tagName(),1);
+                map.put(child.tagName(), Integer.valueOf(1));
             }
             String childXpath = "";
             if (child.tagName().equals("svg")){
