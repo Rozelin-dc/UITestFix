@@ -22,6 +22,64 @@ import java.io.IOException;
 import java.util.List;
 
 public class MatchFactory {
+    protected static String _matchMethod = null;
+
+    protected static String _getMatchMethod() {
+        if (_matchMethod == null || _matchMethod.isEmpty()) {
+            try {
+                _matchMethod = UtilsProperties.getConfigProperties().getProperty("match").trim();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+                _matchMethod = "water";
+            }
+        }
+        return _matchMethod;
+    }
+
+    public static boolean isBroken(
+            StateMachineImpl oldStateMachine,
+            StateMachineImpl newStateMachine,
+            Event oldEvent,
+            WebDriver driver,
+            WebElement webElement
+    ) throws IOException {
+        String matchMethod = _getMatchMethod();
+        switch (matchMethod) {
+            case "original":
+                return isBrokenByOriginal(oldStateMachine, newStateMachine, oldEvent, webElement);
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isBrokenByOriginal(
+            StateMachineImpl oldStateMachine,
+            StateMachineImpl newStateMachine,
+            Event oldEvent,
+            WebElement webElement
+    ) throws IOException {
+        List<PreDomNodeInfo> oldPreDomNodeInfoList = JsonProcess.readPreDomNodeInfoJson(oldStateMachine.getSavePath() +
+                                                                                        File.separator +
+                                                                                        oldEvent.getSourceVertexId() +
+                                                                                        File.separator +
+                                                                                        "preDomNodeInfo.json");
+        PreDomNodeInfo preDomNodeInfo = null;
+        for (PreDomNodeInfo temp : oldPreDomNodeInfoList) {
+            if (temp.getXpath().equals(oldEvent.getAbsoluteXpath())) {
+                preDomNodeInfo = temp;
+                break;
+            }
+        }
+        if (preDomNodeInfo == null) {
+            return true;
+        }
+        return Original.checkIsBrokenFromDOMInfo(
+                newStateMachine.getDriver(),
+                preDomNodeInfo,
+                oldEvent.getMethod(),
+                webElement
+        );
+    }
 
     public static String match(
             StateMachineImpl oldStateMachine,
@@ -29,12 +87,7 @@ public class MatchFactory {
             Event oldEvent,
             WebDriver driver
     ) throws IOException {
-        String matchMethod = "water";
-        try {
-            matchMethod = UtilsProperties.getConfigProperties().getProperty("match").trim();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+        String matchMethod = _getMatchMethod();
         switch (matchMethod) {
             case "sftm":
                 return matchBySFTM(oldStateMachine, oldEvent, driver);

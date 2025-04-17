@@ -5,8 +5,31 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.util.Objects;
+
 public class Original {
     static final String TEST_ID_ATTRIBUTE_NAME = "data-test-id";
+
+    public static boolean checkIsBrokenFromDOMInfo(
+            WebDriver driver,
+            PreDomNodeInfo oldPreDomNodeInfo,
+            String eventName,
+            WebElement webElement
+    ) {
+        String testId = oldPreDomNodeInfo.getAttributes().get(TEST_ID_ATTRIBUTE_NAME);
+
+        if (testId == null || testId.isEmpty()) {
+            return true;
+        }
+
+        String actualTestId = webElement.getAttribute(TEST_ID_ATTRIBUTE_NAME);
+        if (testId.equals(actualTestId)) {
+            return false;
+        }
+
+        String actualTestIdForAction = webElement.getAttribute(TEST_ID_ATTRIBUTE_NAME + "-for-action-");
+        return !testId.equals(actualTestIdForAction);
+    }
 
     public static WebElement retrieveWebElementFromDOMInfo(
             WebDriver driver,
