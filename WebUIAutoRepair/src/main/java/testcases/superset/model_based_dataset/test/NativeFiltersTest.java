@@ -1,55 +1,84 @@
 package testcases.superset.model_based_dataset.test;
 
 import config.DriverConfig;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.AssertJUnit;
+import org.testng.annotations.*;
 import testcases.Constants;
 
-import java.io.IOException;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import static org.testng.AssertJUnit.assertTrue;
-
 public class NativeFiltersTest {
-    WebDriver driver;
+    OriginalWebDriver driver;
+    long milliseconds = new Date().getTime();
+    String dashboard = "Test Dashboard" + milliseconds;
+
+    @BeforeClass
+    public void setupClass() throws Exception {
+        driver.login();
+        driver.get(TestConstant.DASHBOARD_LIST);
+        driver.findElement(By.cssSelector("[data-test=\"new-dropdown\"]")).click();
+        driver.findElement(By.cssSelector("[data-test=\"menu-item-Dashboard\"]")).click();
+        driver.findElement(By.cssSelector("[data-test=\"editable-title-input\"]")).sendKeys(dashboard + Keys.ENTER);
+        driver.findElement(By.cssSelector("[data-test=\"header-save-button\"]")).click();
+        driver.get(TestConstant.CHART_LIST);
+        driver.findElement(By.cssSelector("[data-test=\"search-input\"]")).sendKeys("Treemap" + Keys.ENTER);
+        WebElement element0 = driver.findElement(By.cssSelector("[data-test=\"Treemap-list-chart-title\"]"));
+        AssertJUnit.assertTrue(element0.isDisplayed());
+        element0.click();
+        driver.findElement(By.cssSelector("[data-test=\"query-save-button\"]")).click();
+        driver.findElement(By.cssSelector("[data-test=\"save-chart-modal-select-dashboard-form\"]"))
+              .findElement(By.cssSelector("#dashboard-creatable-select"))
+              .sendKeys(dashboard + Keys.ENTER + Keys.ENTER);
+        driver.findElement(By.cssSelector("[data-test=\"btn-modal-save\"]")).click();
+    }
 
     @BeforeMethod
-    public void before() throws IOException {
+    public void before() throws Exception {
         System.setProperty("webdriver.chrome.driver", DriverConfig.DRIVER_PATH);
-        ChromeOptions options = new ChromeOptions();
-        driver = new ChromeDriver(options);
+        ChromeOptions options = new ChromeOptions().addArguments("--headless");
+        driver = new OriginalWebDriver(options);
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         driver.get(Constants.getSupersetUrl());
 
-        // TODO: ログイン処理とか
+        driver.login();
+        driver.get(TestConstant.DASHBOARD_LIST);
+        driver.findElement(By.cssSelector("[data-test=\"search-input\"]")).sendKeys(dashboard + Keys.ENTER);
+        driver.findElement(By.xpath("//*[contains(text(), '[data-test=\"cell-text\"]')]")).click();
     }
 
     @Test(priority = 0)
     void shouldShowFilterBarAndAllowUserToCreateFilters() throws InterruptedException {
-        assertTrue(driver.findElement(By.cssSelector("[data-test=\"filter-bar\"]")).isDisplayed());
+        AssertJUnit.assertTrue(driver.findElement(By.cssSelector("[data-test=\"filter-bar\"]")).isDisplayed());
         driver.findElement(By.cssSelector("[data-test=\"filter-bar\"]")).click();
         driver.findElement(By.cssSelector("[data-test=\"create-filter\"]")).click();
-        assertTrue(driver.findElement(By.className("ant-modal")).isDisplayed());
+        AssertJUnit.assertTrue(driver.findElement(By.className("ant-modal")).isDisplayed());
 
-        driver.findElement(By.className("ant-modal")).findElement(By.cssSelector("[data-test=\"name-input\"]")).sendKeys("Country name");
+        driver.findElement(By.className("ant-modal"))
+              .findElement(By.cssSelector("[data-test=\"name-input\"]"))
+              .sendKeys("Country name");
 
-        driver.findElement(By.className("ant-modal")).findElement(By.cssSelector("[data-test=\"datasource-input\"]")).sendKeys("wb_health_population");
+        driver.findElement(By.className("ant-modal"))
+              .findElement(By.cssSelector("[data-test=\"datasource-input\"]"))
+              .sendKeys("wb_health_population");
 
-        WebElement filterShow = driver.findElement(By.cssSelector(".ant-modal [data-test=\"datasource-input\"] .Select__menu"));
-        assertTrue(filterShow.getText().contains("wb_health_population"));
+        WebElement filterShow = driver.findElement(By.cssSelector(
+                ".ant-modal [data-test=\"datasource-input\"] .Select__menu"));
+        AssertJUnit.assertTrue(filterShow.getText().contains("wb_health_population"));
         filterShow.click();
 
-        driver.findElement(By.className("ant-modal")).findElement(By.cssSelector("[data-test=\"field-input\"]")).sendKeys("country_name");
-        driver.findElement(By.className("ant-modal")).findElement(By.cssSelector("[data-test=\"field-input\"]")).sendKeys("{downarrow}{downarrow}{enter}");
+        driver.findElement(By.className("ant-modal"))
+              .findElement(By.cssSelector("[data-test=\"field-input\"]"))
+              .sendKeys("country_name");
+        driver.findElement(By.className("ant-modal"))
+              .findElement(By.cssSelector("[data-test=\"field-input\"]"))
+              .sendKeys("" + Keys.ARROW_DOWN + Keys.ARROW_DOWN + Keys.ENTER);
         driver.findElement(By.cssSelector("[data-test=\"apply-changes-instantly-checkbox\"]")).click();
-        WebElement saveButton = driver.findElement(By.className("ant-modal-footer")).findElement((By.cssSelector("[data-test=\"native-filter-modal-save-button\"]")));
-        assertTrue(saveButton.isDisplayed());
+        WebElement saveButton = driver.findElement(By.className("ant-modal-footer"))
+                                      .findElement((By.cssSelector("[data-test=\"native-filter-modal-save-button\"]")));
+        AssertJUnit.assertTrue(saveButton.isDisplayed());
         saveButton.click();
     }
 
