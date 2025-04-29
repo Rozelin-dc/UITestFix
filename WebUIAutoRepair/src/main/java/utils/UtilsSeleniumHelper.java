@@ -60,6 +60,14 @@ public class UtilsSeleniumHelper {
 
     public static void captureScreen(WebElement webElement, String savePath) {
         System.out.println(savePath);
+        if (webElement == null) {
+            return;
+        }
+        Dimension size = webElement.getSize();
+        if (size.getWidth() == 0 || size.getHeight() == 0) {
+            return;
+        }
+
         try {
             File screenshot = webElement.getScreenshotAs(OutputType.FILE);
             FileUtils.copyFile(screenshot, new File(savePath));
