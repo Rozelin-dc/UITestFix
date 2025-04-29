@@ -33,7 +33,9 @@ public class DomParser(val params: Parameters = Parameters()) {
          * The Node data structure is internal to this library
          */
         @JvmStatic
-        public fun webpageToTree(source: String, params: Parameters = Parameters()): List<Node> { return DomParser(params).webpageToTree(source) }
+        public fun webpageToTree(source: String, params: Parameters = Parameters()): List<Node> {
+            return DomParser(params).webpageToTree(source)
+        }
     }
 
     /**
@@ -49,7 +51,7 @@ public class DomParser(val params: Parameters = Parameters()) {
      * @return A list of the nodes parsed.
      * The Node data structure is internal to this library
      */
-    public fun webpageToTree(source: String) : List<Node> {
+    public fun webpageToTree(source: String): List<Node> {
         val doc = Jsoup.parse(source)
         return domToTree(doc)
     }
@@ -61,21 +63,21 @@ public class DomParser(val params: Parameters = Parameters()) {
             .filter { it.isNotBlank() }
 
         return when (valueTokens.count()) {
-            0                                -> emptyList()
-            1                                -> valueTokens
+            0 -> emptyList()
+            1 -> valueTokens
             in 2..params.maxTokensPerValue -> valueTokens + value
-            else                             -> listOf(value)
+            else -> listOf(value)
         }
     }
 
     private fun tokenizeAttribute(attr: Attribute): List<String> {
         val isIgnored = attr.key == params.signatureAttribute
-                        || attr.key.startsWith("data")
+                || attr.key.startsWith("data")
 
         return when {
-            isIgnored            -> emptyList()
+            isIgnored -> emptyList()
             attr.value.isBlank() -> listOf(attr.key)
-            else                 -> {
+            else -> {
                 val tokens = tokenizeValue(attr.value).map { token -> "${attr.key}:$token" }
                 tokens + attr.key
             }
@@ -87,19 +89,22 @@ public class DomParser(val params: Parameters = Parameters()) {
 
 
     private fun getNewXPath(el: Element, parent: Element?, partialXPath: String): String {
-        val indexCurrentElement = parent
-                                      ?.children()
-                                      ?.filter { it.tagName() == el.tagName() }
-                                      ?.indexOf(el) ?: -1
+        val childElements = parent
+            ?.children()
+            ?.asSequence()
+            ?.filter { it.tagName() == el.tagName() }
+            ?.toList() ?: emptyList()
+
+        val indexCurrentElement = childElements.indexOfFirst { it == el }
 
         val brackets = if (indexCurrentElement != -1) "[$indexCurrentElement]" else ""
 
         return partialXPath + "/${el.tagName()}" + brackets
     }
 
-    private fun domToTree(doc: Document) : List<Node> {
+    private fun domToTree(doc: Document): List<Node> {
         val nodes = mutableListOf<Node>()
-        fun copy(el: Element, parent: Element?, parentNode: Node?, partialXPath: String) : Node {
+        fun copy(el: Element, parent: Element?, parentNode: Node?, partialXPath: String): Node {
             val newXPath = getNewXPath(el, parent, partialXPath)
             val tokenizedNode = tokenizeNode(el) + newXPath
             val node = Node(

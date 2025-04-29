@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.apache.commons.io.FileUtils;
-import org.seleniumhq.jetty9.util.IO;
 
 import java.io.File;
 import java.io.IOException;
