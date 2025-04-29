@@ -1,35 +1,30 @@
 package testcases.superset.model_based_dataset.test;
 
-import com.google.gson.JsonObject;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.AssertJUnit;
-
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.support.ui.*;
+import testcases.*;
 
 public class OriginalWebDriver extends ChromeDriver {
+    WebDriverWait wait;
+
+    public OriginalWebDriver() {
+        super();
+        wait = new WebDriverWait(this, 10);
+    }
+
     public OriginalWebDriver(ChromeOptions options) {
         super(options);
+        wait = new WebDriverWait(this, 10);
     }
 
     public OriginalWebDriver login() throws Exception {
-        HttpURLConnection conn = (HttpURLConnection) new URL("/login/").openConnection();
-        conn.setRequestMethod("POST");
-        conn.setDoOutput(true);
-        JsonObject json = new JsonObject();
-        json.addProperty("username", "admin");
-        json.addProperty("password", "general");
-        String jsonString = json.toString();
-        try (OutputStream os = conn.getOutputStream()) {
-            byte[] input = jsonString.getBytes("utf-8");
-            os.write(input, 0, input.length);
-        }
-        int responseCode = conn.getResponseCode();
-        AssertJUnit.assertEquals(200, responseCode);
+        this.get(Constants.getSupersetUrl() + "/login/");
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username")));
+        this.findElement(By.id("username")).sendKeys("admin");
+        this.findElement(By.id("password")).sendKeys("admin");
+        this.findElement(By.cssSelector("[type=\"submit\"]")).click();
+
         return this;
     }
 //

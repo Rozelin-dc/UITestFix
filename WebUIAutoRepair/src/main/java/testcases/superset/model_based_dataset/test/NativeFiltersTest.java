@@ -1,29 +1,47 @@
 package testcases.superset.model_based_dataset.test;
 
-import config.DriverConfig;
+import config.*;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.AssertJUnit;
+import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.support.ui.*;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.*;
 import org.testng.annotations.*;
-import testcases.Constants;
+import testcases.*;
 
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class NativeFiltersTest {
     OriginalWebDriver driver;
+    WebDriverWait wait;
+    Actions act;
     long milliseconds = new Date().getTime();
     String dashboard = "Test Dashboard" + milliseconds;
 
     @BeforeClass
-    public void setupClass() throws Exception {
+    public void setUp() throws Exception {
+        System.setProperty("webdriver.chrome.driver", DriverConfig.DRIVER_PATH);
+        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--headless");
+        driver = new OriginalWebDriver(options);
+        driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        driver.get(Constants.getSupersetUrl());
+
+        wait = new WebDriverWait(driver, 10);
+        act = new Actions(driver);
+
         driver.login();
-        driver.get(TestConstant.DASHBOARD_LIST);
-        driver.findElement(By.cssSelector("[data-test=\"new-dropdown\"]")).click();
-        driver.findElement(By.cssSelector("[data-test=\"menu-item-Dashboard\"]")).click();
+
+        driver.get(Constants.getSupersetUrl() + TestConstant.DASHBOARD_LIST);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test=\"new-dropdown\"]")));
+        WebElement dropDown = driver.findElement(By.cssSelector("[data-test=\"new-dropdown\"]"));
+        act.moveToElement(dropDown).perform();
+//        driver.findElement(By.cssSelector("[data-test=\"menu-item-Dashboard\"]"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("a[href='/dashboard/new']"))).click();
         driver.findElement(By.cssSelector("[data-test=\"editable-title-input\"]")).sendKeys(dashboard + Keys.ENTER);
         driver.findElement(By.cssSelector("[data-test=\"header-save-button\"]")).click();
-        driver.get(TestConstant.CHART_LIST);
+        driver.get(Constants.getSupersetUrl() + TestConstant.CHART_LIST);
         driver.findElement(By.cssSelector("[data-test=\"search-input\"]")).sendKeys("Treemap" + Keys.ENTER);
         WebElement element0 = driver.findElement(By.cssSelector("[data-test=\"Treemap-list-chart-title\"]"));
         AssertJUnit.assertTrue(element0.isDisplayed());
@@ -38,13 +56,19 @@ public class NativeFiltersTest {
     @BeforeMethod
     public void before() throws Exception {
         System.setProperty("webdriver.chrome.driver", DriverConfig.DRIVER_PATH);
-        ChromeOptions options = new ChromeOptions().addArguments("--headless");
+        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--headless");
         driver = new OriginalWebDriver(options);
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         driver.get(Constants.getSupersetUrl());
 
+        wait = new WebDriverWait(driver, 10);
+        act = new Actions(driver);
+
         driver.login();
-        driver.get(TestConstant.DASHBOARD_LIST);
+
+        driver.get(Constants.getSupersetUrl() + TestConstant.DASHBOARD_LIST);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-test=\"search-input\"]")));
         driver.findElement(By.cssSelector("[data-test=\"search-input\"]")).sendKeys(dashboard + Keys.ENTER);
         driver.findElement(By.xpath("//*[contains(text(), '[data-test=\"cell-text\"]')]")).click();
     }
