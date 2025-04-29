@@ -1,10 +1,9 @@
 package autorepair.state.edge;
 
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.*;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Objects;
+import java.io.*;
+import java.util.*;
 
 public class Event implements Serializable {
 
@@ -103,9 +102,17 @@ public class Event implements Serializable {
 
     private List<Object> arguments;
 
-
-    public Event(int sourceVertexId, int targetVertexId, Identification identification, String method, String codeLine,
-        String absoluteXpath, int elementId, EventType eventType, List<Object> arguments) {
+    public Event(
+            int sourceVertexId,
+            int targetVertexId,
+            Identification identification,
+            String method,
+            String codeLine,
+            String absoluteXpath,
+            int elementId,
+            EventType eventType,
+            List<Object> arguments
+    ) {
         this.sourceVertexId = sourceVertexId;
         this.targetVertexId = targetVertexId;
         this.identification = identification;
@@ -119,10 +126,18 @@ public class Event implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Event event = (Event) o;
-        return sourceVertexId == event.sourceVertexId && targetVertexId == event.targetVertexId && Objects.equals(identification, event.identification) && Objects.equals(method, event.method) && Objects.equals(codeLine, event.codeLine);
+        return sourceVertexId == event.sourceVertexId &&
+               targetVertexId == event.targetVertexId &&
+               Objects.equals(identification, event.identification) &&
+               Objects.equals(method, event.method) &&
+               Objects.equals(codeLine, event.codeLine);
     }
 
     @Override
@@ -133,13 +148,86 @@ public class Event implements Serializable {
     @Override
     public String toString() {
         return "Event{" +
-                "eventType=" + eventType +
-                ", eventId=" + eventId +
-                ", sourceVertexId=" + sourceVertexId +
-                ", targetVertexId=" + targetVertexId +
-                ", identification=" + identification +
-                ", method='" + method + '\'' +
-                ", arguments=" + arguments +
-                '}';
+               "eventType=" +
+               eventType +
+               ", eventId=" +
+               eventId +
+               ", sourceVertexId=" +
+               sourceVertexId +
+               ", targetVertexId=" +
+               targetVertexId +
+               ", identification=" +
+               identification +
+               ", method='" +
+               method +
+               "'" +
+               ", arguments=" +
+               arguments +
+               '}';
+    }
+
+    @Serial
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        List<Object> serializableArguments = new ArrayList<>();
+
+        for (Object argument : arguments) {
+            if (argument instanceof By) {
+                By by = (By) argument;
+                String serialized = serializeBy(by);
+                serializableArguments.add(serialized);
+            } else {
+                serializableArguments.add(argument);
+            }
+        }
+
+        this.arguments = serializableArguments;
+        out.defaultWriteObject();
+    }
+
+    @Serial
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+
+        List<Object> deserializedArguments = new ArrayList<>();
+        for (Object argument : arguments) {
+            if (argument instanceof String && ((String) argument).startsWith("BY::")) {
+                deserializedArguments.add(deserializeBy((String) argument));
+            } else {
+                deserializedArguments.add(argument);
+            }
+        }
+
+        this.arguments = deserializedArguments;
+    }
+
+    private String serializeBy(By by) {
+        String value = by.toString(); // e.g.: "By.className: my-class"
+        if (value.startsWith("By.")) {
+            return "BY::" + value.substring(3); // → "BY::className: my-class"
+        }
+        return null;
+    }
+
+    private By deserializeBy(String serialized) {
+        if (!serialized.startsWith("BY::")) {
+            return null;
+        }
+
+        String content = serialized.substring(4); // "className: my-class"
+        String[] parts = content.split(":", 2);
+        String type = parts[0].trim();
+        String value = parts.length > 1 ? parts[1].trim() : "";
+
+        return switch (type) {
+            case "id" -> By.id(value);
+            case "name" -> By.name(value);
+            case "className" -> By.className(value);
+            case "cssSelector" -> By.cssSelector(value);
+            case "linkText" -> By.linkText(value);
+            case "partialLinkText" -> By.partialLinkText(value);
+            case "tagName" -> By.tagName(value);
+            case "xpath" -> By.xpath(value);
+            default -> throw new IllegalArgumentException("Unknown By type: " + type);
+        };
     }
 }
