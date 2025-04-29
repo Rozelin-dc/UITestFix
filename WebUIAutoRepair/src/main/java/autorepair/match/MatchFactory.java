@@ -22,6 +22,19 @@ import java.io.IOException;
 import java.util.List;
 
 public class MatchFactory {
+    protected static String _matchMethod = null;
+
+    protected static String _getMatchMethod() {
+        if (_matchMethod == null || _matchMethod.isEmpty()) {
+            try {
+                _matchMethod = UtilsProperties.getConfigProperties().getProperty("match").trim();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+                _matchMethod = "water";
+            }
+        }
+        return _matchMethod;
+    }
 
     public static String match(
             StateMachineImpl oldStateMachine,
@@ -29,12 +42,8 @@ public class MatchFactory {
             Event oldEvent,
             WebDriver driver
     ) throws IOException {
-        String matchMethod = "water";
-        try {
-            matchMethod = UtilsProperties.getConfigProperties().getProperty("match").trim();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+        String matchMethod = _getMatchMethod();
+        System.out.println("execute match method: " + matchMethod);
         switch (matchMethod) {
             case "sftm":
                 return matchBySFTM(oldStateMachine, oldEvent, driver);
