@@ -89,10 +89,13 @@ public class DomParser(val params: Parameters = Parameters()) {
 
 
     private fun getNewXPath(el: Element, parent: Element?, partialXPath: String): String {
-        val indexCurrentElement = parent
-                                      ?.children()
-                                      ?.filter { it.tagName() == el.tagName() }
-                                      ?.indexOf(el) ?: -1
+        val childElements = parent
+            ?.children()
+            ?.asSequence()
+            ?.filter { it.tagName() == el.tagName() }
+            ?.toList() ?: emptyList()
+
+        val indexCurrentElement = childElements.indexOfFirst { it == el }
 
         val brackets = if (indexCurrentElement != -1) "[$indexCurrentElement]" else ""
 
