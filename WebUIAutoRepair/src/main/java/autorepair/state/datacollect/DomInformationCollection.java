@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
@@ -76,7 +77,16 @@ public class DomInformationCollection {
         FileUtils.copyFile(srcfile, new File(rootPath + "fullScreen.png"));
         img = ImageIO.read(new File(rootPath + "fullScreen.png"));
         /*html*/
-        String html = UtilsSeleniumHelper.getHtml(driver);
+        String _html = UtilsSeleniumHelper.getHtml(driver);
+        // Conversion according to the charset of the page
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String charsetName = (String) js.executeScript(
+                "return document.charset;"
+        );
+        System.out.println("page charset: " + charsetName);
+        Charset charset = Charset.forName(charsetName);
+        byte[] bytes = _html.getBytes(StandardCharsets.UTF_8);
+        String html = new String(bytes, charset);
         parseHtml(html);
         stringToFile(html, savePath, "temp.html");
         /*tree*/
@@ -364,7 +374,7 @@ public class DomInformationCollection {
                     String text = driver.findElement(By.xpath(preDomNodeInfo.getXpath())).getAttribute("value");
                     preDomNodeInfo.setText(text);
                 }catch (NoSuchElementException noSuchElementException){
-                    
+
                 }
             }
         }
