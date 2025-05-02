@@ -1,34 +1,27 @@
 package testcases.tl.model_based_dataset.test;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import config.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.*;
+import org.testng.annotations.*;
+import testcases.*;
 
-import config.DriverConfig;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-import testcases.Constants;
-import utils.UtilsSeleniumHelper;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
 
-import static org.testng.AssertJUnit.assertEquals;
-import static org.testng.AssertJUnit.assertTrue;
+import static org.testng.AssertJUnit.*;
 
 public class TestSetting {
     WebDriver driver;
 
     @BeforeMethod
     public void before() throws IOException {
-        System.setProperty("webdriver.chrome.driver",
-                DriverConfig.DRIVER_PATH);
+        System.setProperty("webdriver.chrome.driver", DriverConfig.DRIVER_PATH);
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--lang=ja");
 //        options.addArguments("--encoding=Shift_JIS");
+        options.addArguments("--headless");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         driver.get(Constants.getTLUrl());
@@ -43,7 +36,7 @@ public class TestSetting {
     @Test(priority = 0)
     void testCaption() throws InterruptedException {
         WebElement caption = driver.findElement(By.className("caption"));
-        assertTrue(caption.getText().contains("ローマ字"));
+        assertTrue(caption.getText().contains("UTAWO UTAOU"));
     }
 
     @Test(priority = 0)
@@ -52,9 +45,9 @@ public class TestSetting {
         WebElement settingButton = iconButtons.get(2);
         settingButton.click();
     }
-    
+
     @AfterMethod
-    public void end () {
+    public void end() {
         driver.quit();
     }
 

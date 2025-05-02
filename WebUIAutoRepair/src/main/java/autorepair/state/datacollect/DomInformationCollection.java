@@ -184,33 +184,33 @@ public class DomInformationCollection {
                 "    return str;\n" +
                 "}\n" +
                 "window.getElementX = function(element){\n" +
-                "　　　　        if(element.tagName == \"svg\"){\n" +
+                "            if(element.tagName == \"svg\"){\n" +
                 "            var actualLeft = 0;\n" +
                 "            var current = element.parentElement;\n" +
                 "        }else{\n" +
                 "            var actualLeft = element.offsetLeft;\n" +
                 "            var current = element.offsetParent;\n" +
                 "        }\n" +
-                "　　　　while (current !== null){\n" +
-                "　　　　　　actualLeft += current.offsetLeft;\n" +
+                "    while (current !== null){\n" +
+                "      actualLeft += current.offsetLeft;\n" +
                 "            if(current.tagName == \"svg\"){\n" +
                 "                current = current.parentElement;\n" +
                 "            }else{\n" +
                 "                current = current.offsetParent;\n" +
                 "            }\n" +
-                "　　　　}\n" +
+                "    }\n" +
                 "       var computedStyle = getComputedStyle(element, null);\n" +
-                "　　　　return actualLeft;" +
+                "    return actualLeft;" +
                 "}\n" +
                 "window.getElementY = function(element){\n" +
                 "        if(element.tagName == \"svg\"){\n" +
                 "            var actualLeft = 0;\n" +
                 "            var current = element.parentElement;\n" +
                 "        }else{\n" +
-                "        　　　var actualLeft = element.offsetTop;\n" +
+                "            var actualLeft = element.offsetTop;\n" +
                 "              var current = element.offsetParent;\n" +
-                "        }　　\n" +
-                "　　　　while (current !== null){\n" +
+                "        }\n" +
+                "    while (current !== null){\n" +
                 "            if(current.tagName == \"svg\"){\n" +
                 "              actualLeft += 0;\n" +
                 "                current = current.parentElement;\n" +
@@ -219,30 +219,30 @@ public class DomInformationCollection {
                 "              current = current.offsetParent;\n" +
                 "\n" +
                 "            }\n" +
-                "　　　　}\n" +
+                "    }\n" +
                 "       var computedStyle = getComputedStyle(element, null);\n" +
-                "　　　　return actualLeft;" +
+                "    return actualLeft;" +
                 "}\n" +
                 "window.getElementW = function(element){\n" +
                 "    if(element.tagName == \"svg\"){\n" +
                 "           var actualLeft = element.clientWidth;\n" +
                 "           var computedStyle = getComputedStyle(element, null);\n" +
                 "    }else{\n" +
-                "     　　　　var actualLeft = element.offsetWidth;\n" +
+                "         var actualLeft = element.offsetWidth;\n" +
                 "           var computedStyle = getComputedStyle(element, null);\n" +
                 "      }\n" +
                 "   \n" +
-                "　　　　return actualLeft;" +
+                "    return actualLeft;" +
                 "}\n" +
                 "window.getElementH = function(element){\n" +
                 "       if(element.tagName == \"svg\"){\n" +
-                "      　　  var actualLeft = element.clientHeight;\n" +
+                "          var actualLeft = element.clientHeight;\n" +
                 "            var computedStyle = getComputedStyle(element, null);\n" +
                 "       }else{\n" +
-                "    　　　　var actualLeft = element.offsetHeight;\n" +
+                "        var actualLeft = element.offsetHeight;\n" +
                 "            var computedStyle = getComputedStyle(element, null);\n" +
                 "        }\n" +
-                "　　　　return actualLeft;" +
+                "    return actualLeft;" +
                 "}\n" +
                 "window.isDisplayedInViewport = function(elem) {\n" +
                 "    try{" +

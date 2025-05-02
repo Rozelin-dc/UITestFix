@@ -88,6 +88,7 @@ public class MatchFactory {
             WebDriver driver
     ) throws IOException {
         String matchMethod = _getMatchMethod();
+        System.out.println("execute match method: " + matchMethod);
         switch (matchMethod) {
             case "sftm":
                 return matchBySFTM(oldStateMachine, oldEvent, driver);

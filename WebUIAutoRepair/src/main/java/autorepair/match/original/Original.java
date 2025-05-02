@@ -1,9 +1,7 @@
 package autorepair.match.original;
 
-import autorepair.state.datacollect.PreDomNodeInfo;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import autorepair.state.datacollect.*;
+import org.openqa.selenium.*;
 
 import java.util.Objects;
 
@@ -37,6 +35,7 @@ public class Original {
             String eventName
     ) {
         String testId = oldPreDomNodeInfo.getAttributes().get(TEST_ID_ATTRIBUTE_NAME);
+        System.out.println("testId: " + testId);
 
         if (testId == null || testId.isEmpty()) {
             return null;
@@ -44,7 +43,7 @@ public class Original {
 
         WebElement el = null;
         try {
-            el = driver.findElement(By.cssSelector("[" + TEST_ID_ATTRIBUTE_NAME + "]=" + testId));
+            el = driver.findElement(By.cssSelector("[" + TEST_ID_ATTRIBUTE_NAME + "=\"" + testId + "\"]"));
             return el;
         } catch (Exception ignored) {
         }
@@ -54,8 +53,9 @@ public class Original {
                                                    TEST_ID_ATTRIBUTE_NAME +
                                                    "-for-action-" +
                                                    eventName +
-                                                   "]=" +
-                                                   testId));
+                                                   "=\"" +
+                                                   testId +
+                                                   "\"]"));
         } catch (Exception ignored) {
         }
 

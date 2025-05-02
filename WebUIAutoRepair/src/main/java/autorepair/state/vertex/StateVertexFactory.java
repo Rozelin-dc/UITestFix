@@ -11,7 +11,7 @@ import utils.UtilsProperties;
 import utils.UtilsSeleniumHelper;
 
 import java.io.IOException;
-
+import java.time.*;
 
 public class StateVertexFactory {
 
@@ -30,7 +30,7 @@ public class StateVertexFactory {
 
     public static StateVertex createNewStateVertex(StateMachineImpl stateMachine) {
         WebDriver driver = stateMachine.getDriver();
-        WebDriverWait wait = new WebDriverWait(driver, 1);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
         String url = "";
         String page = "";
             url = driver.getCurrentUrl();
