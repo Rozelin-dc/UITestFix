@@ -112,165 +112,172 @@ public class Constants {
         }
     }
 
+    public static String getTLUrl() throws IOException {
+        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+            return UrlConfig.TL_NEW;
+        } else {
+            return UrlConfig.TL_OLD;
+        }
+    }
 
-    public static String getW3SchoolsUrl() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.W3Schools_NEW;
-        } else {
-            return UrlConfig.W3Schools_OLD;
-        }
-    }
-    public static String getHomedepot() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Homedepot_NEW;
-        } else {
-            return UrlConfig.Homedepot_OLD;
-        }
-    }
-    public static String getDoubanMovie() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.DoubanMovie_NEW;
-        } else {
-            return UrlConfig.DoubanMovie_OLD;
-        }
-    }
-    public static String getDoubanMusic() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.DoubanMusic_NEW;
-        } else {
-            return UrlConfig.DoubanMusic_OLD;
-        }
-    }
-    public static String getApple() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Apple_NEW;
-        } else {
-            return UrlConfig.Apple_OLD;
-        }
-    }
-    public static String getBeijing() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Beijing_NEW;
-        } else {
-            return UrlConfig.Beijing_OLD;
-        }
-    }
-    public static String getXiaomi() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Xiaomi_NEW;
-        } else {
-            return UrlConfig.Xiaomi_OLD;
-        }
-    }
-    public static String getHuawei() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Huawei_NEW;
-        } else {
-            return UrlConfig.Huawei_OLD;
-        }
-    }
-    public static String getBook() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Book_NEW;
-        } else {
-            return UrlConfig.Book_OLD;
-        }
-    }
-    public static String getYandex() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Yandex_NEW;
-        } else {
-            return UrlConfig.Yandex_OLD;
-        }
-    }
-    public static String getXfinity() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Xfinity_NEW;
-        } else {
-            return UrlConfig.Xfinity_OLD;
-        }
-    }
-    public static String getUsps() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Usps_NEW;
-        } else {
-            return UrlConfig.Usps_OLD;
-        }
-    }
-    public static String getLinkedin() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Linkedin_NEW;
-        } else {
-            return UrlConfig.Linkedin_OLD;
-        }
-    }
-    public static String getGithub14_16() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Github2014;
-        } else {
-            return UrlConfig.Github2016;
-        }
-    }
-    public static String getGithub16_20() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Github2016;
-        } else {
-            return UrlConfig.Github2020;
-        }
-    }
-    public static String getGithub20_now() throws IOException {
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
-        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
-                .trim().equals("new"));
-        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
-            return UrlConfig.Github2020;
-        } else {
-            return UrlConfig.Github_now;
-        }
-    }
+//    public static String getW3SchoolsUrl() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.W3Schools_NEW;
+//        } else {
+//            return UrlConfig.W3Schools_OLD;
+//        }
+//    }
+//    public static String getHomedepot() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Homedepot_NEW;
+//        } else {
+//            return UrlConfig.Homedepot_OLD;
+//        }
+//    }
+//    public static String getDoubanMovie() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.DoubanMovie_NEW;
+//        } else {
+//            return UrlConfig.DoubanMovie_OLD;
+//        }
+//    }
+//    public static String getDoubanMusic() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.DoubanMusic_NEW;
+//        } else {
+//            return UrlConfig.DoubanMusic_OLD;
+//        }
+//    }
+//    public static String getApple() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Apple_NEW;
+//        } else {
+//            return UrlConfig.Apple_OLD;
+//        }
+//    }
+//    public static String getBeijing() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Beijing_NEW;
+//        } else {
+//            return UrlConfig.Beijing_OLD;
+//        }
+//    }
+//    public static String getXiaomi() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Xiaomi_NEW;
+//        } else {
+//            return UrlConfig.Xiaomi_OLD;
+//        }
+//    }
+//    public static String getHuawei() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Huawei_NEW;
+//        } else {
+//            return UrlConfig.Huawei_OLD;
+//        }
+//    }
+//    public static String getBook() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Book_NEW;
+//        } else {
+//            return UrlConfig.Book_OLD;
+//        }
+//    }
+//    public static String getYandex() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Yandex_NEW;
+//        } else {
+//            return UrlConfig.Yandex_OLD;
+//        }
+//    }
+//    public static String getXfinity() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Xfinity_NEW;
+//        } else {
+//            return UrlConfig.Xfinity_OLD;
+//        }
+//    }
+//    public static String getUsps() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Usps_NEW;
+//        } else {
+//            return UrlConfig.Usps_OLD;
+//        }
+//    }
+//    public static String getLinkedin() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Linkedin_NEW;
+//        } else {
+//            return UrlConfig.Linkedin_OLD;
+//        }
+//    }
+//    public static String getGithub14_16() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Github2014;
+//        } else {
+//            return UrlConfig.Github2016;
+//        }
+//    }
+//    public static String getGithub16_20() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Github2016;
+//        } else {
+//            return UrlConfig.Github2020;
+//        }
+//    }
+//    public static String getGithub20_now() throws IOException {
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version"));
+//        System.out.println(UtilsProperties.getConfigProperties().getProperty("version")
+//                .trim().equals("new"));
+//        if (UtilsProperties.getConfigProperties().getProperty("version").trim().equals("new")) {
+//            return UrlConfig.Github2020;
+//        } else {
+//            return UrlConfig.Github_now;
+//        }
+//    }
 }
